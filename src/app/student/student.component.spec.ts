@@ -3,11 +3,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { StudentComponent } from './student.component';
 import { StudentService } from './student.service';
 import { of } from 'rxjs';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('StudentComponent', () => {
   let component: StudentComponent;
   let fixture: ComponentFixture<StudentComponent>;
   let h1: HTMLElement;
+  let debugElement: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -18,6 +21,7 @@ describe('StudentComponent', () => {
     fixture = TestBed.createComponent(StudentComponent);
     component = fixture.componentInstance;
     h1 = fixture.nativeElement.querySelector('[data-testid="result"]');
+    debugElement = fixture.debugElement;
     fixture.detectChanges();
   });
 
@@ -51,5 +55,29 @@ describe('StudentComponent', () => {
     component.studentResult()
     fixture.detectChanges(); // On every change the data we must use fixture.detectChanges()
     expect(h1.textContent).toBe(component.studentCalcResult);
+  });
+
+  it('verify btn with DebugElement', () => {
+    const increaseBtn = debugElement.query(By.css('[data-testid="btnincreaseNumber"]'));
+    const decreaseBtn = debugElement.query(By.css('[data-testid="btndecreaseNumber"]'));
+
+    expect(increaseBtn).toBeTruthy();
+    expect(decreaseBtn).toBeTruthy();
+  });
+
+  it('increase count click',()=> {
+    const count = debugElement.query(By.css('[data-testid="count"]'));
+    const increaseBtn = debugElement.query(By.css('[data-testid="btnincreaseNumber"]'));
+    increaseBtn.triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(component.countNumber).toEqual(+count.nativeElement.innerText);
+  });
+
+  it('decrease count click', () => {
+    const count = debugElement.query(By.css('[data-testid="count"]'));
+    const decreaseBtn = debugElement.query(By.css('[data-testid="btndecreaseNumber"]'));
+    decreaseBtn.triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(component.countNumber).toEqual(+count.nativeElement.innerText);
   });
 });
