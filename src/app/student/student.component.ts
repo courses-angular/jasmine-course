@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { StudentService } from './student.service';
 
 @Component({
@@ -12,7 +12,9 @@ export class StudentComponent {
   tital = 'AngularUnitTestApp';
   sum = 0;
   result: any;
-  studentCalcResult: any;
+  studentCalcResult: string = '';
+  countNumber = 0;
+  studentService = inject(StudentService);
   constructor(public services: StudentService) {}
 
   calculate(num1: number, num2: number) {
@@ -47,5 +49,12 @@ export class StudentComponent {
 
   SaveDataIntoConsole(info: any) {
     console.log(info);
+  }
+  increseNumber() {
+    this.countNumber = this.countNumber + 1;
+  }
+
+  decreaseNumber() {
+    this.countNumber = this.countNumber - 1;
   }
 }
