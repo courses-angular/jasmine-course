@@ -40,6 +40,7 @@ describe('StudentComponent', () => {
     let service = TestBed.inject(StudentService);
     spyOn(service, 'SaveDetails').and.callFake(() => {
       return of({ success: true });
+      
     });
     spyOn(component, 'SaveDataIntoConsole').and.stub(); // Spy on SaveDataIntoConsole method with stub that does nothing
     component.saveData();
