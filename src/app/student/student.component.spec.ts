@@ -82,13 +82,21 @@ describe('StudentComponent', () => {
   });
 
   it('should test private method/variable', () => {
+    let spyStudentName = spyOn<any>(component,'showStudentName')
     component['showStudentName'](); // Accessing private method using bracket notation
     expect(component['studentName']).toEqual('Student Name');
   });
+
   it('should test private calculate_private', () => {
     component['calculate_private'](10, 20); // Accessing private method using bracket notation
     expect(component.sum).toEqual(30);
   });
 
+
+  it('should spyOn private method/variable', () => {
+    let spyShowStudentName = spyOn<any>(component,'showStudentName')
+    component['showStudentName'](); // Accessing private method using bracket notation
+    expect(spyShowStudentName).toHaveBeenCalled();
+  });
 
 });
