@@ -10,6 +10,7 @@ describe('StudentComponent', () => {
   let component: StudentComponent;
   let fixture: ComponentFixture<StudentComponent>;
   let h1: HTMLElement;
+  let studentAge: DebugElement;
   let debugElement: DebugElement;
 
   beforeEach(async () => {
@@ -22,6 +23,7 @@ describe('StudentComponent', () => {
     component = fixture.componentInstance;
     h1 = fixture.nativeElement.querySelector('[data-testid="result"]');
     debugElement = fixture.debugElement;
+    studentAge = debugElement.query(By.css('[data-testid="studentAge"]'));
     fixture.detectChanges();
   });
 
@@ -82,8 +84,9 @@ describe('StudentComponent', () => {
   });
 
   it('should test private method/variable', () => {
-    let spyStudentName = spyOn<any>(component,'showStudentName')
+    let spyStudentName = spyOn<any>(component, 'showStudentName').and.callThrough();
     component['showStudentName'](); // Accessing private method using bracket notation
+    expect(spyStudentName).toHaveBeenCalled();
     expect(component['studentName']).toEqual('Student Name');
   });
 
@@ -97,6 +100,28 @@ describe('StudentComponent', () => {
     let spyShowStudentName = spyOn<any>(component,'showStudentName')
     component['showStudentName'](); // Accessing private method using bracket notation
     expect(spyShowStudentName).toHaveBeenCalled();
+  });
+
+  it('should test string interpolation', () => {
+     expect(+studentAge.nativeElement.innerText).toEqual(component.studentAge);
+
+     // Change the age and verify again
+     component.studentAge = 30;
+     fixture.detectChanges();
+     expect(+studentAge.nativeElement.innerText).toEqual(component.studentAge);
+  });
+
+  it('should test property binding for type and placeholder', () => {
+    const inputElement = debugElement.query(By.css('[data-testid="inputAge"]'));
+    expect(inputElement.attributes['type']).toBe(component.type);
+    expect(inputElement.attributes['placeholder']).toBe(component.placeholder);
+
+    // Change the type and placeholder and verify again
+    component.type = 'text';
+    component.placeholder = 'Enter Name';
+    fixture.detectChanges();
+    expect(inputElement.attributes['type']).toBe(component.type);
+    expect(inputElement.attributes['placeholder']).toBe(component.placeholder);
   });
 
 });

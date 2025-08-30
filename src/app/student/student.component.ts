@@ -1,10 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { StudentService } from './student.service';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-student',
   standalone: true,
-  imports: [],
+  imports: [
+    FormsModule
+  ],
   templateUrl: './student.component.html',
   styleUrl: './student.component.css',
 })
@@ -16,6 +19,11 @@ export class StudentComponent {
   countNumber = 0;
   private studentName = ''
   studentService = inject(StudentService);
+  studentAge = 25;
+  studentAddress = 'Hyderabad, India';
+  studentPhone = 9876543210;
+  type: string = 'number';
+  placeholder: string = 'Enter Age';
 
   calculate(num1: number, num2: number) {
     this.sum = num1 + num2;
