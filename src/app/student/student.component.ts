@@ -14,10 +14,14 @@ export class StudentComponent {
   result: any;
   studentCalcResult: string = '';
   countNumber = 0;
+  private studentName = ''
   studentService = inject(StudentService);
-  constructor(public services: StudentService) {}
 
   calculate(num1: number, num2: number) {
+    this.sum = num1 + num2;
+    return this.sum;
+  }
+  private calculate_private(num1: number, num2: number) {
     this.sum = num1 + num2;
     return this.sum;
   }
@@ -28,7 +32,7 @@ export class StudentComponent {
       name: 'Dot Net Office',
     };
     this.SaveDataIntoConsole(info);
-    this.services.SaveDetails(info).subscribe((response) => {
+    this.studentService.SaveDetails(info).subscribe((response) => {
       this.result = response;
     });
   }
@@ -43,18 +47,22 @@ export class StudentComponent {
     }
   }
 
-  ShowMessage(Msg: string): string {
-    return Msg;
+  private showMessage(msg: string): string {
+    return msg;
   }
 
   SaveDataIntoConsole(info: any) {
     console.log(info);
   }
-  increseNumber() {
+  increaseNumber() {
     this.countNumber = this.countNumber + 1;
   }
 
   decreaseNumber() {
     this.countNumber = this.countNumber - 1;
+  }
+  private showStudentName(): string{
+     this.studentName ='Student Name';
+     return this.studentName;
   }
 }

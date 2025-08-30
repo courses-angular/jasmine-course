@@ -44,7 +44,7 @@ describe('StudentComponent', () => {
     let service = TestBed.inject(StudentService);
     spyOn(service, 'SaveDetails').and.callFake(() => {
       return of({ success: true });
-      
+
     });
     spyOn(component, 'SaveDataIntoConsole').and.stub(); // Spy on SaveDataIntoConsole method with stub that does nothing
     component.saveData();
@@ -80,4 +80,15 @@ describe('StudentComponent', () => {
     fixture.detectChanges();
     expect(component.countNumber).toEqual(+count.nativeElement.innerText);
   });
+
+  it('should test private method/variable', () => {
+    component['showStudentName'](); // Accessing private method using bracket notation
+    expect(component['studentName']).toEqual('Student Name');
+  });
+  it('should test private calculate_private', () => {
+    component['calculate_private'](10, 20); // Accessing private method using bracket notation
+    expect(component.sum).toEqual(30);
+  });
+
+
 });
