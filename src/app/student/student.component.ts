@@ -1,12 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { StudentService } from './student.service';
 import {FormsModule} from '@angular/forms';
+import {NgClass, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-student',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgClass,
+    NgStyle
   ],
   templateUrl: './student.component.html',
   styleUrl: './student.component.css',
@@ -24,6 +27,19 @@ export class StudentComponent {
   studentPhone = 9876543210;
   type: string = 'number';
   placeholder: string = 'Enter Age';
+  redColor = 'red';
+  blueColor = 'blue';
+  numberValueForClass = 15;
+
+   pageHeader:string = 'Student information';
+  FirstName: string = 'DotNet';
+  LastName:string='Office';
+  Branch:string='IT';
+  Mobile:number=1234567890;
+  Gender:string='Male';
+  Age:number=25;
+  ColumnSpan =2;
+  arialable = "NewAriaLable"
 
   calculate(num1: number, num2: number) {
     this.sum = num1 + num2;

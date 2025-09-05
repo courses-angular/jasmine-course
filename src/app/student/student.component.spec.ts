@@ -124,4 +124,28 @@ describe('StudentComponent', () => {
     expect(inputElement.attributes['placeholder']).toBe(component.placeholder);
   });
 
+  it('should test property binding - ngClass/ngStyle', () => {
+    const studentPortal = debugElement.query(By.css('[data-testid="student-portal"]'));
+    const isNumber = debugElement.query(By.css('[data-testid="is-number"]'));
+    expect(studentPortal.attributes['class']).toContain('red');
+    expect(studentPortal.attributes['style']).toContain('font-weight: bold');
+    expect(isNumber.attributes['class']).toContain('blue');
+
+    // Change the numberValueForClass and verify again
+    component.numberValueForClass = 5;
+    fixture.detectChanges();
+    expect(studentPortal.attributes['class']).toContain('red');
+    expect(isNumber.attributes['class']).toContain('red');
+    expect(studentPortal.attributes['style']).toContain('font-weight: normal');
+  });
+
+  it('should test attribute binding', () => {
+    const colSpanElement = debugElement.query(By.css('[data-testid="col-span"]'));
+    expect(+colSpanElement.attributes['colspan']!).toBe(component.ColumnSpan);
+
+    const btnSave = debugElement.query(By.css('[data-testid="save-button"]'));
+    console.log(btnSave.attributes);
+    expect(btnSave.attributes['aria-label']).toEqual(component.arialable);
+  })
+
 });

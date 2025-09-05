@@ -10,3 +10,45 @@
 <label for="name">Enter your age:</label>
 <input data-testid="inputAge" [type]="type" [(ngModel)]="studentAge" [placeholder]="placeholder" />
 <h1 data-testid="studentAge">{{studentAge}}</h1>
+
+<p [ngClass]="redColor" data-testid="student-portal" [ngStyle]="{'font-weight': numberValueForClass > 10 ? 'bold': 'normal'}" >Student portal</p>
+<p data-testid="is-number" [ngClass]="numberValueForClass > 10 ? blueColor : redColor">Is number greater then 10 so color is blue otherwise color is red</p>
+
+
+<button type="button" [attr.aria-label] = 'arialable' id="buttonid" data-testid="save-button">save</button>
+
+<table border="1">
+<thead>
+    <tr>
+        <th [attr.colspan]='ColumnSpan' id="colId" data-testid="col-span">
+{{pageHeader}}
+        </th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>First Name</td>
+        <td>{{FirstName}}</td>
+    </tr>
+    <tr>
+        <td>Last Name</td>
+        <td>{{LastName}}</td>
+    </tr>
+    <tr>
+        <td>Branch</td>
+        <td>{{Branch}}</td>
+    </tr>
+    <tr>
+        <td>Mobile</td>
+        <td>{{Mobile}}</td>
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td>{{Gender}}</td>
+    </tr>
+    <tr>
+        <td>Age</td>
+        <td>{{Age}}</td>
+    </tr>
+</tbody>
+</table>
