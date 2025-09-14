@@ -40,6 +40,7 @@ export class StudentComponent {
   Age:number=25;
   ColumnSpan =2;
   arialable = "NewAriaLable"
+  label: string = "Dotnet";
 
   calculate(num1: number, num2: number) {
     this.sum = num1 + num2;
@@ -88,5 +89,21 @@ export class StudentComponent {
   private showStudentName(): string{
      this.studentName ='Student Name';
      return this.studentName;
+  }
+
+  button1Click() {
+    this.label = "DotNet office";
+  }
+
+  button2Click() {
+    this.label = "label value change on button2";
+  }
+
+  onChangeInput() {
+    this.label = "onChangeInput label value change";
+  }
+
+  onChangeLabelInput(event: Event) {
+    this.label = (event.target as HTMLInputElement).value;
   }
 }

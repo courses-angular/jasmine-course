@@ -1,13 +1,13 @@
-<p>student portal!</p>
+<p data-testid="student-portal-text">student portal!</p>
 
-<button (click)="studentResult()">Get Result</button>
+<button data-testid="get-result-btn" (click)="studentResult()">Get Result</button>
 <h1 data-testid="result">{{studentCalcResult}}</h1>
 
 <button data-testid="btnincreaseNumber" (click)="increaseNumber()" class="btn btn-primary">increase Number</button>
 <button data-testid="btndecreaseNumber" (click)="decreaseNumber()" class="btn btn-primary" style="margin-left: 10px;">decrease Number</button>
 <h1 data-testid="count">{{countNumber}}</h1>
 
-<label for="name">Enter your age:</label>
+<label data-testid="age-label" for="name">Enter your age:</label>
 <input data-testid="inputAge" [type]="type" [(ngModel)]="studentAge" [placeholder]="placeholder" />
 <h1 data-testid="studentAge">{{studentAge}}</h1>
 
@@ -17,38 +17,53 @@
 
 <button type="button" [attr.aria-label] = 'arialable' id="buttonid" data-testid="save-button">save</button>
 
-<table border="1">
+<table data-testid="student-info-table" border="1">
 <thead>
-    <tr>
+    <tr data-testid="header-row">
         <th [attr.colspan]='ColumnSpan' id="colId" data-testid="col-span">
 {{pageHeader}}
         </th>
     </tr>
 </thead>
-<tbody>
-    <tr>
-        <td>First Name</td>
-        <td>{{FirstName}}</td>
+<tbody data-testid="table-body">
+    <tr data-testid="first-name-row">
+        <td data-testid="first-name-label">First Name</td>
+        <td data-testid="first-name-value">{{FirstName}}</td>
     </tr>
-    <tr>
-        <td>Last Name</td>
-        <td>{{LastName}}</td>
+    <tr data-testid="last-name-row">
+        <td data-testid="last-name-label">Last Name</td>
+        <td data-testid="last-name-value">{{LastName}}</td>
     </tr>
-    <tr>
-        <td>Branch</td>
-        <td>{{Branch}}</td>
+    <tr data-testid="branch-row">
+        <td data-testid="branch-label">Branch</td>
+        <td data-testid="branch-value">{{Branch}}</td>
     </tr>
-    <tr>
-        <td>Mobile</td>
-        <td>{{Mobile}}</td>
+    <tr data-testid="mobile-row">
+        <td data-testid="mobile-label">Mobile</td>
+        <td data-testid="mobile-value">{{Mobile}}</td>
     </tr>
-    <tr>
-        <td>Gender</td>
-        <td>{{Gender}}</td>
+    <tr data-testid="gender-row">
+        <td data-testid="gender-label">Gender</td>
+        <td data-testid="gender-value">{{Gender}}</td>
     </tr>
-    <tr>
-        <td>Age</td>
-        <td>{{Age}}</td>
+    <tr data-testid="age-row">
+        <td data-testid="age-label">Age</td>
+        <td data-testid="age-value">{{Age}}</td>
     </tr>
 </tbody>
 </table>
+
+
+<button data-testid="button1" id="button1" (click)="button1Click()" style="color: blue;">button1 click event</button>
+<br>
+<br>
+<button data-testid="button2" id="button2" on-click="button2Click()" style="color: blue;">button2 click event</button>
+<br>
+<br>
+<input data-testid="textbox1" id="textbox1" placeholder="button1 on value string" (input)="onChangeInput()" />
+<br>
+<br>
+
+<input data-testid="textbox2" id="textbox2" placeholder=" capture the event of the input" (input)="onChangeLabelInput($event)" />
+<br />
+<h3 data-testid="label-display">{{label}}</h3>

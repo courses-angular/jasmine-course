@@ -148,4 +148,55 @@ describe('StudentComponent', () => {
     expect(btnSave.attributes['aria-label']).toEqual(component.arialable);
   })
 
+  it('should test event binding - Button 1', () => {
+    const button_1 = debugElement.query(By.css('[data-testid="button1"]'));
+
+    expect(component.label).toBe('Dotnet');
+    button_1.triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(component.label).toBe('DotNet office');
+  });
+
+  it('should test event binding - Button 2', () => {
+    const button_1 = debugElement.query(By.css('[data-testid="button2"]'));
+    expect(component.label).toBe('Dotnet');
+
+    button_1.triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(component.label).toBe('label value change on button2');
+  });
+
+  it('should test event binding - Textbox 1', () => {
+    const textbox1 = debugElement.query(By.css('[data-testid="textbox1"]'));
+    expect(component.label).toBe('Dotnet');
+
+    textbox1.triggerEventHandler('input', null);
+    fixture.detectChanges();
+    expect(component.label).toBe('onChangeInput label value change');
+  });
+
+  it('should test event binding - Textbox 2', () => {
+    const textbox2 = debugElement.query(By.css('[data-testid="textbox2"]'));
+    expect(component.label).toBe('Dotnet');
+
+    // Create a spy on the onChangeLabelInput method
+    spyOn(component, 'onChangeLabelInput').and.callThrough();
+
+    // Create a mock event object with target value
+    const mockEvent = {
+      target: {
+        value: 'Test Input Value Updated'
+      }
+    } as any;
+
+    // Set the input value and trigger the event with the mock event
+    textbox2.nativeElement.value = 'Test Input Value Updated';
+    textbox2.triggerEventHandler('input', mockEvent);
+    fixture.detectChanges();
+
+    // Verify the spy was called and the label was updated
+    expect(component.onChangeLabelInput).toHaveBeenCalledWith(mockEvent);
+    expect(component.label).toBe(textbox2.nativeElement.value);
+  });
+
 });
