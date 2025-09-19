@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { StudentComponent } from './student.component';
-import { StudentService } from './student.service';
-import { of } from 'rxjs';
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {StudentComponent} from './student.component';
+import {StudentService} from './student.service';
+import {of} from 'rxjs';
+import {DebugElement} from '@angular/core';
+import {By} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
 
 describe('StudentComponent', () => {
   let component: StudentComponent;
@@ -46,11 +46,11 @@ describe('StudentComponent', () => {
   it('Spy on service method with callFake', () => {
     let service = TestBed.inject(StudentService);
     spyOn(service, 'SaveDetails').and.callFake(() => {
-      return of({ success: true });
+      return of({success: true});
     });
     spyOn(component, 'SaveDataIntoConsole').and.stub(); // Spy on SaveDataIntoConsole method with stub that does nothing
     component.saveData();
-    expect(component.result).toEqual({ success: true });
+    expect(component.result).toEqual({success: true});
   });
 
   it('verify h1 value with ChangeDetection', () => {
@@ -246,7 +246,8 @@ describe('StudentComponent', () => {
     const setNameBtn = debugElement.query(
       By.css('[data-testid="set-name-button"]')
     );
-    fixture.whenStable().then(() => {});
+    fixture.whenStable().then(() => {
+    });
     setNameBtn.triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(component.studentName2).toBe('Test Name');
@@ -259,4 +260,26 @@ describe('StudentComponent', () => {
       done();
     });
   });
+
+  it('should test two way binding with async ', async () => {
+    component.studentName2 = 'Updated student name';
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const inputStudentName = debugElement.query(
+        By.css('[data-testid="inputStudentName"]')
+      );
+      expect(inputStudentName.nativeElement.value).toBe('Updated student name');
+    });
+  });
+
+  it('should test two way binding with fakeAsync ', fakeAsync(() => {
+    component.studentName2 = 'Updated student name';
+    fixture.detectChanges();
+    tick();
+    const inputStudentName = debugElement.query(
+      By.css('[data-testid="inputStudentName"]')
+    );
+    expect(inputStudentName.nativeElement.value).toBe('Updated student name');
+
+  }));
 });
