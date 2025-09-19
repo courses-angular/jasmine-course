@@ -67,3 +67,7 @@
 <input data-testid="textbox2" id="textbox2" placeholder=" capture the event of the input" (input)="onChangeLabelInput($event)" />
 <br />
 <h3 data-testid="label-display">{{label}}</h3>
+
+<input data-testid="inputStudentName" type="text" class="form-control" id="name" [(ngModel)] = "studentName2">
+<h2>{{studentName2}}</h2>
+<button (click) = "setName()" id="button1" data-testid="set-name-button">Set student name</button>

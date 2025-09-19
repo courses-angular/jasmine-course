@@ -42,6 +42,11 @@ export class StudentComponent {
   arialable = "NewAriaLable"
   label: string = "Dotnet";
 
+  studentName2:string = '';
+
+  constructor() {
+  }
+
   calculate(num1: number, num2: number) {
     this.sum = num1 + num2;
     return this.sum;
@@ -105,5 +110,8 @@ export class StudentComponent {
 
   onChangeLabelInput(event: Event) {
     this.label = (event.target as HTMLInputElement).value;
+  }
+  setName() {
+    this.studentName2 = 'Test Name';
   }
 }

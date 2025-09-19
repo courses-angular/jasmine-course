@@ -5,6 +5,7 @@ import { StudentService } from './student.service';
 import { of } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 describe('StudentComponent', () => {
   let component: StudentComponent;
@@ -15,7 +16,7 @@ describe('StudentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StudentComponent, HttpClientTestingModule],
+      imports: [StudentComponent, HttpClientTestingModule, FormsModule],
       providers: [StudentService],
     }).compileComponents();
 
@@ -46,7 +47,6 @@ describe('StudentComponent', () => {
     let service = TestBed.inject(StudentService);
     spyOn(service, 'SaveDetails').and.callFake(() => {
       return of({ success: true });
-
     });
     spyOn(component, 'SaveDataIntoConsole').and.stub(); // Spy on SaveDataIntoConsole method with stub that does nothing
     component.saveData();
@@ -54,22 +54,28 @@ describe('StudentComponent', () => {
   });
 
   it('verify h1 value with ChangeDetection', () => {
-    component.studentResult()
+    component.studentResult();
     fixture.detectChanges(); // On every change the data we must use fixture.detectChanges()
     expect(h1.textContent).toBe(component.studentCalcResult);
   });
 
   it('verify btn with DebugElement', () => {
-    const increaseBtn = debugElement.query(By.css('[data-testid="btnincreaseNumber"]'));
-    const decreaseBtn = debugElement.query(By.css('[data-testid="btndecreaseNumber"]'));
+    const increaseBtn = debugElement.query(
+      By.css('[data-testid="btnincreaseNumber"]')
+    );
+    const decreaseBtn = debugElement.query(
+      By.css('[data-testid="btndecreaseNumber"]')
+    );
 
     expect(increaseBtn).toBeTruthy();
     expect(decreaseBtn).toBeTruthy();
   });
 
-  it('increase count click',()=> {
+  it('increase count click', () => {
     const count = debugElement.query(By.css('[data-testid="count"]'));
-    const increaseBtn = debugElement.query(By.css('[data-testid="btnincreaseNumber"]'));
+    const increaseBtn = debugElement.query(
+      By.css('[data-testid="btnincreaseNumber"]')
+    );
     increaseBtn.triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(component.countNumber).toEqual(+count.nativeElement.innerText);
@@ -77,14 +83,19 @@ describe('StudentComponent', () => {
 
   it('decrease count click', () => {
     const count = debugElement.query(By.css('[data-testid="count"]'));
-    const decreaseBtn = debugElement.query(By.css('[data-testid="btndecreaseNumber"]'));
+    const decreaseBtn = debugElement.query(
+      By.css('[data-testid="btndecreaseNumber"]')
+    );
     decreaseBtn.triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(component.countNumber).toEqual(+count.nativeElement.innerText);
   });
 
   it('should test private method/variable', () => {
-    let spyStudentName = spyOn<any>(component, 'showStudentName').and.callThrough();
+    let spyStudentName = spyOn<any>(
+      component,
+      'showStudentName'
+    ).and.callThrough();
     component['showStudentName'](); // Accessing private method using bracket notation
     expect(spyStudentName).toHaveBeenCalled();
     expect(component['studentName']).toEqual('Student Name');
@@ -95,20 +106,19 @@ describe('StudentComponent', () => {
     expect(component.sum).toEqual(30);
   });
 
-
   it('should spyOn private method/variable', () => {
-    let spyShowStudentName = spyOn<any>(component,'showStudentName')
+    let spyShowStudentName = spyOn<any>(component, 'showStudentName');
     component['showStudentName'](); // Accessing private method using bracket notation
     expect(spyShowStudentName).toHaveBeenCalled();
   });
 
   it('should test string interpolation', () => {
-     expect(+studentAge.nativeElement.innerText).toEqual(component.studentAge);
+    expect(+studentAge.nativeElement.innerText).toEqual(component.studentAge);
 
-     // Change the age and verify again
-     component.studentAge = 30;
-     fixture.detectChanges();
-     expect(+studentAge.nativeElement.innerText).toEqual(component.studentAge);
+    // Change the age and verify again
+    component.studentAge = 30;
+    fixture.detectChanges();
+    expect(+studentAge.nativeElement.innerText).toEqual(component.studentAge);
   });
 
   it('should test property binding for type and placeholder', () => {
@@ -125,7 +135,9 @@ describe('StudentComponent', () => {
   });
 
   it('should test property binding - ngClass/ngStyle', () => {
-    const studentPortal = debugElement.query(By.css('[data-testid="student-portal"]'));
+    const studentPortal = debugElement.query(
+      By.css('[data-testid="student-portal"]')
+    );
     const isNumber = debugElement.query(By.css('[data-testid="is-number"]'));
     expect(studentPortal.attributes['class']).toContain('red');
     expect(studentPortal.attributes['style']).toContain('font-weight: bold');
@@ -140,13 +152,15 @@ describe('StudentComponent', () => {
   });
 
   it('should test attribute binding', () => {
-    const colSpanElement = debugElement.query(By.css('[data-testid="col-span"]'));
+    const colSpanElement = debugElement.query(
+      By.css('[data-testid="col-span"]')
+    );
     expect(+colSpanElement.attributes['colspan']!).toBe(component.ColumnSpan);
 
     const btnSave = debugElement.query(By.css('[data-testid="save-button"]'));
     console.log(btnSave.attributes);
     expect(btnSave.attributes['aria-label']).toEqual(component.arialable);
-  })
+  });
 
   it('should test event binding - Button 1', () => {
     const button_1 = debugElement.query(By.css('[data-testid="button1"]'));
@@ -185,8 +199,8 @@ describe('StudentComponent', () => {
     // Create a mock event object with target value
     const mockEvent = {
       target: {
-        value: 'Test Input Value Updated'
-      }
+        value: 'Test Input Value Updated',
+      },
     } as any;
 
     // Set the input value and trigger the event with the mock event
@@ -199,4 +213,50 @@ describe('StudentComponent', () => {
     expect(component.label).toBe(textbox2.nativeElement.value);
   });
 
+  it('should test two way binding', (done) => {
+    component.studentName2 = 'Updated student name';
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const inputStudentName = debugElement.query(
+        By.css('[data-testid="inputStudentName"]')
+      );
+      expect(inputStudentName.nativeElement.value).toBe('Updated student name');
+      done();
+    });
+  });
+
+  it('should reflect changes from textbox to component variable', (done) => {
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const inputStudentName = debugElement.query(
+        By.css('[data-testid="inputStudentName"]')
+      );
+      inputStudentName.nativeElement.value = 'Updated student name';
+      inputStudentName.nativeElement.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(inputStudentName.nativeElement.value).toEqual(
+        component.studentName2
+      );
+      done();
+    });
+  });
+
+  it('should test setName method', (done) => {
+    fixture.detectChanges();
+    const setNameBtn = debugElement.query(
+      By.css('[data-testid="set-name-button"]')
+    );
+    fixture.whenStable().then(() => {});
+    setNameBtn.triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(component.studentName2).toBe('Test Name');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const inputStudentName = debugElement.query(
+        By.css('[data-testid="inputStudentName"]')
+      );
+      expect(inputStudentName.nativeElement.value).toBe('Test Name');
+      done();
+    });
+  });
 });
